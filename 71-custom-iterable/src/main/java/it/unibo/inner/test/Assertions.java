@@ -42,6 +42,7 @@ public final class Assertions {
         }
     }
 
+    
     private static long iterableSize(Iterable<?> iter) {
         var counter = 0L;
         for (var elem : iter) {

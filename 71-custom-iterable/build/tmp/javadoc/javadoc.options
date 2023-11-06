@@ -1,0 +1,12 @@
+-classpath 'C:\\Users\\keegancarlo.falcao\\Downloads\\lab07\\71-custom-iterable\\build\\classes\\java\\main;C:\\Users\\keegancarlo.falcao\\Downloads\\lab07\\71-custom-iterable\\build\\resources\\main'
+-d 'C:\\Users\\keegancarlo.falcao\\Downloads\\lab07\\71-custom-iterable\\build\\docs\\javadoc'
+-doctitle '71-custom-iterable API'
+-notimestamp 
+-quiet 
+-windowtitle '71-custom-iterable API'
+'C:\\Users\\keegancarlo.falcao\\Downloads\\lab07\\71-custom-iterable\\src\\main\\java\\it\\unibo\\inner\\api\\IterableWithPolicy.java'
+'C:\\Users\\keegancarlo.falcao\\Downloads\\lab07\\71-custom-iterable\\src\\main\\java\\it\\unibo\\inner\\test\\api\\Product.java'
+'C:\\Users\\keegancarlo.falcao\\Downloads\\lab07\\71-custom-iterable\\src\\main\\java\\it\\unibo\\inner\\test\\Assertions.java'
+'C:\\Users\\keegancarlo.falcao\\Downloads\\lab07\\71-custom-iterable\\src\\main\\java\\it\\unibo\\inner\\test\\impl\\ProductImpl.java'
+'C:\\Users\\keegancarlo.falcao\\Downloads\\lab07\\71-custom-iterable\\src\\main\\java\\it\\unibo\\inner\\TestIterablePlain.java'
+'C:\\Users\\keegancarlo.falcao\\Downloads\\lab07\\71-custom-iterable\\src\\main\\java\\it\\unibo\\inner\\TestIterableWithPolicy.java'
