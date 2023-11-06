@@ -5,7 +5,6 @@ import it.unibo.functional.api.Function;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -56,11 +55,11 @@ public final class Transformers {
      * @param <O> output elements type
      */
     public static <I, O> List<O> transform(final Iterable<I> base, final Function<I, O> transformer) {
-        List<O> quadrati = new ArrayList<>();
-        for (I i : base) {
-            quadrati.add(transformer.call(i));
-        }
-        return List.copyOf(quadrati);
+        return Transformers.flattenTransform(base, new Function<I,Collection<? extends O>>() {
+            public Collection<? extends O> call(I input) {
+                return List.of(transformer.call(input));
+            }
+        });
     }
 
     /**
@@ -76,11 +75,7 @@ public final class Transformers {
      * @param <I> type of the collection elements
      */
     public static <I> List<? extends I> flatten(final Iterable<? extends Collection<? extends I>> base) {
-        List<I> flatten = new ArrayList<>();
-        for (var i : base) {
-            flatten.addAll(i);
-        }
-        return flatten;
+        return Transformers.flattenTransform(base, Function.identity());
     }
 
     /**
@@ -97,14 +92,12 @@ public final class Transformers {
      * @param <I> elements type
      */
     public static <I> List<I> select(final Iterable<I> base, final Function<I, Boolean> test) {
-        List<I> select = new ArrayList<>();
-        for (I i : base) {
-            if(test.call(i)){
-                select.add(i);
+        return Transformers.flattenTransform(base, new Function<I,Collection<? extends I>>() {
+            public Collection<? extends I> call(I input) {
+                return test.call(input) ? Collections.singleton(input) : Collections.emptyList();
             }
-        }
-    
-        return List.copyOf(select);
+            
+        });
     }
 
     /**
@@ -120,25 +113,15 @@ public final class Transformers {
      * @param <I> elements type
      */
     public static <I> List<I> reject(final Iterable<I> base, final Function<I, Boolean> test) {
-        return getPolicyList(base, test, false);
-    }
-
-    static private <I> List<I> getPolicyList(final Iterable<I> base, final Function<I, Boolean> test, boolean select){
-        List<I> outer = new ArrayList<>();
-        for (I i : base) {
-            if(select){
-                if(test.call(i)){
-                outer.add(i);
-                }
-            }else{
-                if(!test.call(i)){
-                outer.add(i);
-            }
+        return Transformers.flattenTransform(base, new Function<I,Collection<? extends I>>() {
+            public Collection<? extends I> call(I input) {
+                return !test.call(input) ? Collections.singleton(input) : Collections.emptyList();
             }
             
-        }    
-        return List.copyOf(outer);
+        });
     }
+
+   
 
    
     

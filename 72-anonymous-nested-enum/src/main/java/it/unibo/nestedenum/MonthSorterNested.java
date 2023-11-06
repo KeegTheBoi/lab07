@@ -1,21 +1,35 @@
 package it.unibo.nestedenum;
 
 import java.util.Comparator;
-import java.util.Locale;
-import java.util.Objects;
+
+import it.unibo.nestedenum.enums.Month;
 
 /**
  * Implementation of {@link MonthSorter}.
  */
 public final class MonthSorterNested implements MonthSorter {
 
-    @Override
-    public Comparator<String> sortByDays() {
-        return null;
+    public MonthSorterNested(){
+        super();
     }
 
-    @Override
+    public Comparator<String> sortByDays() {
+        return new Comparator<String>() {
+            public int compare(String first, String second) {               
+                return Month.valueOf(first).getNumDays() - Month.valueOf(second).getNumDays();
+            }
+            
+        };
+    }
+
     public Comparator<String> sortByOrder() {
-        return null;
+        return new Comparator<String>() {
+            public int compare(String first, String second) {  
+                Month c = Month.fromString(first);  
+                int cs = c.getIdM();           
+                return Month.valueOf(first).getIdM() - Month.valueOf(second).getIdM();
+            }
+            
+        };
     }
 }
