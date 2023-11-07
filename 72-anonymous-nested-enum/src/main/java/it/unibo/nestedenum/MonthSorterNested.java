@@ -2,12 +2,55 @@ package it.unibo.nestedenum;
 
 import java.util.Comparator;
 
-import it.unibo.nestedenum.enums.Month;
-
 /**
  * Implementation of {@link MonthSorter}.
  */
 public final class MonthSorterNested implements MonthSorter {
+
+    public enum Month {
+        JANUARY(31),
+        FEBRUARY( 28),
+        MARCH( 31),
+        APRIL( 30),
+        MAY( 31),
+        JUNE( 30),
+        JULY( 31),
+        AUGUST( 31),
+        SEPTEMBER( 30),
+        OCTOBER( 31),
+        NOVEMBER( 30),
+        DECEMBER( 31);
+    
+        private final int numDays;
+    
+        private int getNumDays() {
+            return numDays;
+        }
+    
+        public static Month fromString(String prefixMonth){
+            Month matchedMonth = null;
+            int counter = 0;
+            for (Month month : Month.values()) {
+                if(month.name().startsWith(prefixMonth.toUpperCase())){
+                    matchedMonth = month;
+                    counter++;
+                }
+                if(counter > 1){
+                    throw new IllegalArgumentException("Ambiguos month prefix");
+                }
+            }
+            if(counter == 0){
+                throw new IllegalArgumentException("matched not found");
+            }
+            return matchedMonth;
+        }
+    
+    
+        private Month(int numDays){
+            this.numDays = numDays;
+        }
+    }
+    
 
     public MonthSorterNested(){
         super();
@@ -16,7 +59,7 @@ public final class MonthSorterNested implements MonthSorter {
     public Comparator<String> sortByDays() {
         return new Comparator<String>() {
             public int compare(String first, String second) {               
-                return Month.valueOf(first).getNumDays() - Month.valueOf(second).getNumDays();
+                return Month.fromString(first).getNumDays() - Month.fromString(second).getNumDays();
             }
             
         };
@@ -24,10 +67,8 @@ public final class MonthSorterNested implements MonthSorter {
 
     public Comparator<String> sortByOrder() {
         return new Comparator<String>() {
-            public int compare(String first, String second) {  
-                Month c = Month.fromString(first);  
-                int cs = c.getIdM();           
-                return Month.valueOf(first).getIdM() - Month.valueOf(second).getIdM();
+            public int compare(String first, String second) {                            
+                return Month.fromString(first).ordinal() - Month.fromString(second).ordinal();
             }
             
         };
